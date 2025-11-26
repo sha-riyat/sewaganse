@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aether Fashion | Shariyat.dev</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,600,700&f[]=archivo@300,400,500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- SCRIPT ANTI-FLASH (Applique le thème avant le chargement) -->
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+
+    <style>
+        /* --- REPRISE DES VARIABLES (Identique index.html) --- */
+        :root {
+            --bg: #0e0e0e;
+            --text: #ececec;
+            --text-muted: #888888;
+            --accent: #3b82f6;
+            --border: rgba(255, 255, 255, 0.1);
+            --image-bg: #1a1a1a;
+            --cursor-dot: #3b82f6;
+            --cursor-outline: rgba(255, 255, 255, 0.5);
+            --btn-text: #ffffff;
+        }
+
+        [data-theme="light"] {
+            --bg: #f2f2f2;
+            --text: #1a1a1a;
+            --text-muted: #666666;
+            --accent: #2563eb;
+            --border: rgba(0, 0, 0, 0.1);
+            --image-bg: #e6e6e6;
+            --cursor-dot: #2563eb;
+            --cursor-outline: rgba(0, 0, 0, 0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Archivo', sans-serif;
+            overflow-x: hidden;
+            cursor: none;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        h1, h2, h3, .display-font { font-family: 'Clash Display', sans-serif; text-transform: uppercase; }
+        a { text-decoration: none; color: inherit; }
+        img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        
+        /* --- NOISE & CURSOR (Identique) --- */
+        .noise {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9000; opacity: 0.05;
+            background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="1"/%3E%3C/svg%3E');
+        }
+        
+        .cursor-dot { width: 8px; height: 8px; background: var(--cursor-dot); position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 10000; pointer-events: none; }
+        .cursor-outline { width: 40px; height: 40px; border: 1px solid var(--cursor-outline); position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 10000; pointer-events: none; transition: width 0.2s, height 0.2s; }
+        body.hovering .cursor-outline { width: 80px; height: 80px; background: rgba(120, 120, 120, 0.1); border-color: transparent; backdrop-filter: blur(2px); }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed; top: 0; width: 100%; padding: 2rem 4vw;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 100; mix-blend-mode: exclusion;
+        }
+        
+        .logo { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.5px; z-index: 101; }
+        .header-controls { display: flex; align-items: center; gap: 1.5rem; z-index: 101; }
+        .lang-switch { font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; gap: 5px; color: var(--text-muted); }
+        .lang-switch span.active { color: var(--text); }
+        .theme-btn { background: none; border: none; color: var(--text); cursor: pointer; font-size: 1.2rem; display: flex; }
+        
+        /* Cacher l'anglais par défaut */
+        .lang-en { display: none; }
+
+        /* --- PROJECT HERO --- */
+        .project-hero {
+            padding: 20vh 4vw 5vh;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .project-title {
+            font-size: clamp(3rem, 9vw, 10rem);
+            line-height: 0.9;
+            font-weight: 600;
+            margin-bottom: 4rem;
+        }
+
+        .project-meta {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+        }
+
+        .meta-item h5 {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+        
+        .meta-item p { font-size: 1.1rem; font-weight: 500; }
+
+        /* --- PROJECT MEDIA --- */
+        .project-banner {
+            width: 100%;
+            height: 80vh;
+            padding: 0 4vw;
+            margin: 5vh 0;
+        }
+        .banner-wrapper {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--image-bg);
+        }
+        
+        /* --- PROJECT CONTENT --- */
+        .project-content {
+            padding: 10vh 4vw;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+        }
+
+        .content-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: var(--accent);
+            position: sticky;
+            top: 2rem;
+        }
+
+        .content-text p {
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            color: var(--text);
+        }
+
+        /* --- NEXT PROJECT NAV --- */
+        .next-project {
+            border-top: 1px solid var(--border);
+            padding: 10vh 4vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: background 0.3s;
+        }
+        .next-project:hover {
+            background-color: var(--border);
+        }
+        
+        .next-label { font-size: 1rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 1rem; }
+        .next-title { 
+            font-size: clamp(3rem, 8vw, 8rem); 
+            font-family: 'Clash Display', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .project-meta { grid-template-columns: 1fr 1fr; gap: 2rem; }
+            .project-banner { height: 50vh; }
+            .project-content { grid-template-columns: 1fr; }
+            .content-label { position: static; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="noise"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <header>
+        <!-- LOGO QUI RENTRE A LA MAISON -->
+        <a href="index.html" class="logo magnetic hover-target">SHARIYAT.DEV</a>
+        
+        <div class="header-controls">
+            <div class="lang-switch magnetic hover-target">
+                <span class="lang-opt active" data-lang="fr">FR</span>/
+                <span class="lang-opt" data-lang="en">EN</span>
+            </div>
+            <button class="theme-btn magnetic hover-target" id="theme-toggle">
+                <i class="ri-moon-line"></i>
+            </button>
+        </div>
+    </header>
+
+    <div id="smooth-wrapper">
+        <div id="smooth-content">
+
+            <!-- HERO -->
+            <section class="project-hero">
+                <h1 class="project-title">
+                    <div class="reveal-text">Aether</div>
+                    <div class="reveal-text">Fashion</div>
+                </h1>
+                
+                <div class="project-meta">
+                    <div class="meta-item reveal-meta">
+                        <h5>Client</h5>
+                        <p>Aether Inc.</p>
+                    </div>
+                    <div class="meta-item reveal-meta">
+                        <h5><span class="lang-fr">Année</span><span class="lang-en">Year</span></h5>
+                        <p>2024</p>
+                    </div>
+                    <div class="meta-item reveal-meta">
+                        <h5>Role</h5>
+                        <p>Front-End & Design</p>
+                    </div>
+                    <div class="meta-item reveal-meta">
+                        <h5>Live</h5>
+                        <a href="#" class="hover-target" style="text-decoration: underline;">Visit Website</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BANNER IMAGE -->
+            <section class="project-banner">
+                <div class="banner-wrapper parallax-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1481487484168-9b930d51208d?q=80&w=2500&auto=format&fit=crop" alt="Project Cover">
+                </div>
+            </section>
+
+            <!-- CONTENT: CHALLENGE -->
+            <section class="project-content">
+                <div class="content-label">
+                    <span class="lang-fr">Le Projet</span>
+                    <span class="lang-en">The Project</span>
+                </div>
+                <div class="content-text reveal-type">
+                    <p>
+                        <span class="lang-fr">
+                            Aether Fashion est une marque de vêtements avant-gardiste qui cherchait à redéfinir son expérience e-commerce. L'objectif n'était pas seulement de vendre, mais de créer une immersion totale.
+                        </span>
+                        <span class="lang-en">
+                            Aether Fashion is an avant-garde clothing brand looking to redefine its e-commerce experience. The goal was not just to sell, but to create a total immersion.
+                        </span>
+                    </p>
+                    <p>
+                        <span class="lang-fr">
+                            J'ai développé une interface minimaliste utilisant Next.js et GSAP pour les transitions. La navigation sans rechargement offre une sensation de fluidité comparable à une application native.
+                        </span>
+                        <span class="lang-en">
+                            I developed a minimalist interface using Next.js and GSAP for transitions. Reload-free navigation offers a fluidity comparable to a native application.
+                        </span>
+                    </p>
+                </div>
+            </section>
+
+            <!-- FULL WIDTH IMAGE -->
+             <section class="project-banner" style="height: 60vh;">
+                <div class="banner-wrapper parallax-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2500&auto=format&fit=crop" alt="Detail Shot">
+                </div>
+            </section>
+
+            <!-- CONTENT: TECH -->
+            <section class="project-content">
+                <div class="content-label">Tech Stack</div>
+                <div class="content-text reveal-type">
+                    <p>
+                        Next.js 14, Tailwind CSS, Lenis Scroll, WebGL, Vercel Hosting.
+                    </p>
+                </div>
+            </section>
+
+            <!-- NEXT PROJECT -->
+            <a href="project.html" class="next-project hover-target">
+                <div class="next-label">
+                    <span class="lang-fr">Projet Suivant</span>
+                    <span class="lang-en">Next Case</span>
+                </div>
+                <div class="next-title">Neo Bank App</div>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+    <script>
+        // --- THEME RESTORE & TOGGLE ---
+        const themeBtn = document.getElementById('theme-toggle');
+        const icon = themeBtn.querySelector('i');
+        
+        // Initial icon set based on loaded theme
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        if(currentTheme === 'light') icon.className = 'ri-sun-line';
+        else icon.className = 'ri-moon-line';
+
+        themeBtn.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const newVal = current === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newVal);
+            localStorage.setItem('theme', newVal);
+            
+            icon.className = newVal === 'light' ? 'ri-sun-line' : 'ri-moon-line';
+        });
+
+        // --- LANGUAGE ---
+        const langOpts = document.querySelectorAll('.lang-opt');
+        let activeLang = 'fr';
+
+        langOpts.forEach(opt => {
+            opt.addEventListener('click', () => {
+                const lang = opt.getAttribute('data-lang');
+                if(lang !== activeLang) {
+                    activeLang = lang;
+                    
+                    // UI updates
+                    langOpts.forEach(o => o.classList.toggle('active', o.getAttribute('data-lang') === lang));
+                    
+                    if(lang === 'fr') {
+                        document.querySelectorAll('.lang-en').forEach(e => e.style.display = 'none');
+                        document.querySelectorAll('.lang-fr').forEach(e => e.style.display = 'block');
+                    } else {
+                        document.querySelectorAll('.lang-fr').forEach(e => e.style.display = 'none');
+                        document.querySelectorAll('.lang-en').forEach(e => e.style.display = 'block');
+                    }
+                    ScrollTrigger.refresh();
+                }
+            });
+        });
+
+        // --- ANIMATIONS ---
+        const lenis = new Lenis({ duration: 1.2, smooth: true });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Cursor
+        const dot = document.querySelector('.cursor-dot');
+        const outline = document.querySelector('.cursor-outline');
+        window.addEventListener('mousemove', (e) => {
+            dot.style.left = e.clientX+'px'; dot.style.top = e.clientY+'px';
+            outline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 500, fill: "forwards" });
+        });
+        document.querySelectorAll('.hover-target, a').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+
+        // Reveal Animations
+        const tl = gsap.timeline();
+        tl.from(".reveal-text", { y: 100, opacity: 0, duration: 1, stagger: 0.1, ease: "power4.out", delay: 0.2 })
+          .from(".reveal-meta", { y: 20, opacity: 0, duration: 0.8, stagger: 0.05 }, "-=0.5")
+          .from(".banner-wrapper", { scale: 0.9, opacity: 0, duration: 1 }, "-=0.8");
+
+        // Parallax Image
+        gsap.utils.toArray('.parallax-img-wrapper img').forEach(img => {
+            gsap.to(img, {
+                scale: 1.15,
+                scrollTrigger: {
+                    trigger: img.parentElement,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
+        });
+    </script>
+</body>
+</html>

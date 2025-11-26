@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shariyat.dev | Creative Developer</title>
+
+    <!-- Fonts: Clash Display & Archivo -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,600,700&f[]=archivo@300,400,500&display=swap"
+        rel="stylesheet" />
+    <!-- Remix Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <!--Styles CSS-->
+    <link href="styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="noise"></div>
+
+    <!-- Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <header>
+        <!-- LOGO CLICKABLE -->
+        <a href="#" class="logo magnetic hover-target" id="site-logo">SHARIYAT.DEV</a>
+
+        <div class="header-controls">
+            <!-- Language Switcher -->
+            <div class="lang-switch magnetic hover-target" id="lang-toggle">
+                <span class="lang-opt active" data-lang="fr">FR</span>
+                <span style="opacity: 0.3">/</span>
+                <span class="lang-opt" data-lang="en">EN</span>
+            </div>
+
+            <!-- Theme Toggle -->
+            <button class="theme-btn magnetic hover-target" id="theme-toggle">
+                <i class="ri-moon-line theme-icon"></i>
+            </button>
+
+            <!-- CTA Button -->
+            <a href="https://linktr.ee/shariyatdev" class="cta-btn magnetic hover-target">
+                <span class="lang-fr">Me Contacter</span>
+                <span class="lang-en">Let's Talk</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Smooth Scroll Wrapper -->
+    <div id="smooth-wrapper">
+        <div id="smooth-content">
+            <!-- Hero -->
+            <section class="hero">
+                <h1 class="hero-title">
+                    <span class="split-text">Junior</span>
+                    <span class="split-text outline">Front-End</span>
+                    <span class="split-text">Developer</span>
+                </h1>
+                <div class="hero-footer">
+                    <div>
+                        <span class="lang-fr">Défiler pour explorer</span>
+                        <span class="lang-en">Scroll to explore</span>
+                    </div>
+                    <div>Lomé, Togo</div>
+                </div>
+            </section>
+
+            <!-- Marquee -->
+            <section class="marquee-section">
+                <div class="marquee-track">
+                    <div class="marquee-item">INTERACTIVE —</div>
+                    <div class="marquee-item">CREATIVE —</div>
+                    <div class="marquee-item">DESIGN —</div>
+                    <div class="marquee-item">INTERACTIVE —</div>
+                    <div class="marquee-item">CREATIVE —</div>
+                    <div class="marquee-item">DESIGN —</div>
+                </div>
+            </section>
+
+            <!-- Horizontal Projects -->
+            <section class="work-section" id="work">
+                <div class="work-container">
+                    <!-- Project 1 -->
+                    <div class="work-card magnetic-area">
+                        <div class="work-img">
+                            <img src="images/mgs.png"
+                                alt="Project 1" />
+                        </div>
+                        <div class="work-info">
+                            <div class="work-title"> <a href="https://www.magroupsolutions.com/">MAG GROUP SOLUTIONS</a></div>
+                            <div class="work-cat">Agence</div>
+                        </div>
+                    </div>
+                    <!-- Project 2 -->
+                    <!-- <div class="work-card magnetic-area">
+                        <div class="work-img">
+                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2500&auto=format&fit=crop"
+                                alt="Project 2" />
+                        </div>
+                        <div class="work-info">
+                            <div class="work-title">Neo Bank</div>
+                            <div class="work-cat">Fintech App</div>
+                        </div>
+                    </div> -->
+                    <!-- Project 3 -->
+                    <!-- <div class="work-card magnetic-area">
+                        <div class="work-img">
+                            <img src="https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=2500&auto=format&fit=crop"
+                                alt="Project 3" />
+                        </div>
+                        <div class="work-info">
+                            <div class="work-title">Archviz 3D</div>
+                            <div class="work-cat">WebGL</div>
+                        </div>
+                    </div>
+                </div> -->
+            </section>
+
+            <!-- About -->
+            <section class="about-section">
+                <div class="about-text reveal-type">
+                    <span class="lang-fr">
+                        Je transforme des concepts créatifs en interfaces web fidèles et performantes. 
+                        Mon atout ? Une sensibilité UI qui garantit 
+                        que le code sublime le design, sans jamais le trahir.
+                    </span>
+                    <span class="lang-en">
+                        I translate creative concepts into
+                        pixel-perfect, high-performance web interfaces.
+                        My edge? A strong UI sensibility ensuring that code elevates
+                        the design, without ever compromising it.
+                    </span>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <h4>
+                            <span class="lang-fr">Compétences</span>
+                            <span class="lang-en">Skills</span>
+                        </h4>
+                        <ul>
+                            <li>HTML5 / CSS3</li>
+                            <li>JavaScript</li>
+                            <li>Angular 20+</li>
+                            <li>Tailwind CSS</li>
+                        </ul>
+                    </div>
+                    <div class="skill-item">
+                        <h4>
+                            <span class="lang-fr">Créatif</span>
+                            <span class="lang-en">Creative</span>
+                        </h4>
+                        <ul>
+                            <li>Figma</li>
+                            <li>UI/UX Design Basics</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer" id="contact">
+                <a href="mailto:shariyatganse@gmail.com" class="footer-big-text magnetic-area">
+                    <span class="lang-fr">Parlons<br />Projet</span>
+                    <span class="lang-en">Let's Talk<br />Project</span>
+                </a>
+
+                <div class="footer-bottom">
+                    <div class="copyright">&copy; 2025 Shariyat.dev</div>
+                    <div class="footer-links">
+                        <a href="https://www.linkedin.com/in/shariyat-ganse-327770376"
+                            class="magnetic hover-target">LINKEDIN</a>
+                        <a href="https://github.com/sha-riyat" class="magnetic hover-target">GITHUB</a>
+                        <!-- <a href="#" class="magnetic hover-target">TWITTER</a> -->
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+
+</html>
