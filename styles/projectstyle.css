@@ -1,0 +1,164 @@
+/* --- REPRISE DES VARIABLES (Identique index.html) --- */
+        :root {
+            --bg: #0e0e0e;
+            --text: #ececec;
+            --text-muted: #888888;
+            --accent: #3b82f6;
+            --border: rgba(255, 255, 255, 0.1);
+            --image-bg: #1a1a1a;
+            --cursor-dot: #3b82f6;
+            --cursor-outline: rgba(255, 255, 255, 0.5);
+            --btn-text: #ffffff;
+        }
+
+        [data-theme="light"] {
+            --bg: #f2f2f2;
+            --text: #1a1a1a;
+            --text-muted: #666666;
+            --accent: #2563eb;
+            --border: rgba(0, 0, 0, 0.1);
+            --image-bg: #e6e6e6;
+            --cursor-dot: #2563eb;
+            --cursor-outline: rgba(0, 0, 0, 0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Archivo', sans-serif;
+            overflow-x: hidden;
+            cursor: none;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        h1, h2, h3, .display-font { font-family: 'Clash Display', sans-serif; text-transform: uppercase; }
+        a { text-decoration: none; color: inherit; }
+        img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        
+        /* --- NOISE & CURSOR (Identique) --- */
+        .noise {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9000; opacity: 0.05;
+            background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="1"/%3E%3C/svg%3E');
+        }
+        
+        .cursor-dot { width: 8px; height: 8px; background: var(--cursor-dot); position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 10000; pointer-events: none; }
+        .cursor-outline { width: 40px; height: 40px; border: 1px solid var(--cursor-outline); position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 10000; pointer-events: none; transition: width 0.2s, height 0.2s; }
+        body.hovering .cursor-outline { width: 80px; height: 80px; background: rgba(120, 120, 120, 0.1); border-color: transparent; backdrop-filter: blur(2px); }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed; top: 0; width: 100%; padding: 2rem 4vw;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 100; mix-blend-mode: exclusion;
+        }
+        
+        .logo { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.5px; z-index: 101; }
+        .header-controls { display: flex; align-items: center; gap: 1.5rem; z-index: 101; }
+        .lang-switch { font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; gap: 5px; color: var(--text-muted); }
+        .lang-switch span.active { color: var(--text); }
+        .theme-btn { background: none; border: none; color: var(--text); cursor: pointer; font-size: 1.2rem; display: flex; }
+        
+        /* Cacher l'anglais par défaut */
+        .lang-en { display: none; }
+
+        /* --- PROJECT HERO --- */
+        .project-hero {
+            padding: 20vh 4vw 5vh;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .project-title {
+            font-size: clamp(3rem, 9vw, 10rem);
+            line-height: 0.9;
+            font-weight: 600;
+            margin-bottom: 4rem;
+        }
+
+        .project-meta {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+        }
+
+        .meta-item h5 {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+        
+        .meta-item p { font-size: 1.1rem; font-weight: 500; }
+
+        /* --- PROJECT MEDIA --- */
+        .project-banner {
+            width: 100%;
+            height: 80vh;
+            padding: 0 4vw;
+            margin: 5vh 0;
+        }
+        .banner-wrapper {
+            width: 100%;
+            height: 115%;
+            overflow: hidden;
+            background-color: var(--image-bg);
+        }
+        
+        /* --- PROJECT CONTENT --- */
+        .project-content {
+            padding: 10vh 4vw;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+        }
+
+        .content-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: var(--accent);
+            position: sticky;
+            top: 2rem;
+        }
+
+        .content-text p {
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            color: var(--text);
+        }
+
+        /* --- NEXT PROJECT NAV --- */
+        .next-project {
+            border-top: 1px solid var(--border);
+            padding: 10vh 4vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: background 0.3s;
+        }
+        .next-project:hover {
+            background-color: var(--border);
+        }
+        
+        .next-label { font-size: 1rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 1rem; }
+        .next-title { 
+            font-size: clamp(3rem, 8vw, 8rem); 
+            font-family: 'Clash Display', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .project-meta { grid-template-columns: 1fr 1fr; gap: 2rem; }
+            .project-banner { height: 50vh; }
+            .project-content { grid-template-columns: 1fr; }
+            .content-label { position: static; margin-bottom: 1rem; }
+        }
