@@ -1,0 +1,166 @@
+---
+import Header from '../components/Header.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Footer from '../components/Footer.astro';
+import { projects } from '../data/projects';
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="fr" data-lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shariyat Ganse &mdash; D&eacute;veloppeur web &amp; mobile</title>
+    <meta name="description" content="Shariyat Ganse — Développeur web & mobile, freelance." />
+    <script is:inline>
+      (function () {
+        var html = document.documentElement;
+        var saved = localStorage.getItem('lang');
+        if (saved === 'en' || saved === 'fr') {
+          html.lang = saved;
+          html.dataset.lang = saved;
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <Header />
+    <main class="home">
+      <section class="intro">
+        <div class="container">
+          <div class="intro-grid">
+            <div class="intro-grid-left">
+              <p class="intro-title">
+                <span class="intro-name">Shariyat Ganse&thinsp;~</span><br />
+                <span class="intro-role">
+                  <span class="lang-fr">D&eacute;veloppeur web &amp; mobile</span>
+                  <span class="lang-en">Web &amp; mobile developer</span>
+                </span>
+              </p>
+            </div>
+            <div class="intro-grid-right">
+              <p class="intro-bio">
+                <span class="lang-fr">Je d&eacute;bute dans le monde du freelance en tant que d&eacute;veloppeur web et mobile, avec l&rsquo;ambition de cr&eacute;er des exp&eacute;riences num&eacute;riques propres et fonctionnelles.</span>
+                <span class="lang-en">Starting my freelance journey as a web and mobile developer, driven by the ambition to craft clean, functional digital experiences.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="projects">
+        <div class="container">
+          <div class="projects-masonry">
+            <div class="projects-masonry-column">
+              {projects
+                .filter((_, i) => i % 2 === 0)
+                .map((p) => (
+                  <ProjectCard
+                    id={p.id}
+                    thumb={p.thumb}
+                    title={p.title}
+                    services={p.services}
+                  />
+                ))}
+            </div>
+            <div class="projects-masonry-column">
+              {projects
+                .filter((_, i) => i % 2 === 1)
+                .map((p) => (
+                  <ProjectCard
+                    id={p.id}
+                    thumb={p.thumb}
+                    title={p.title}
+                    services={p.services}
+                  />
+                ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <Footer />
+    <script src="../scripts/lang.js"></script>
+  </body>
+</html>
+
+<style is:global>
+  .home {
+    padding: var(--spacing-80) 0;
+  }
+
+  .container {
+    max-width: 100%;
+    padding: 0 var(--spacing-20);
+  }
+
+  .intro-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+  }
+
+  .intro {
+    margin-bottom: var(--spacing-60);
+  }
+
+  .intro-grid-left,
+  .intro-grid-right {
+    position: relative;
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  @media (min-width: 768px) {
+    .intro-grid-left,
+    .intro-grid-right {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+  }
+
+  .intro-title {
+    font-size: var(--text-heading);
+    line-height: var(--leading-heading);
+    letter-spacing: var(--tracking-heading);
+    font-weight: 300;
+    margin-bottom: 0;
+  }
+
+  .intro-name {
+    font-weight: 400;
+  }
+
+  .intro-bio {
+    font-size: var(--text-subheading);
+    line-height: var(--leading-subheading);
+    letter-spacing: var(--tracking-subheading);
+    font-weight: 300;
+  }
+
+  .projects-masonry {
+    display: flex;
+    margin-left: -1.25rem;
+    width: auto;
+  }
+
+  .projects-masonry-column {
+    padding-left: 1.25rem;
+    width: 50%;
+  }
+
+  .projects-masonry-column > * {
+    margin-bottom: var(--spacing-30);
+  }
+
+  @media (max-width: 767px) {
+    .projects-masonry {
+      flex-direction: column;
+    }
+
+    .projects-masonry-column {
+      width: 100%;
+    }
+  }
+</style>

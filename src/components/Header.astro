@@ -1,0 +1,89 @@
+---
+const isProjectPage = Astro.url.pathname !== '/';
+---
+
+<header class="header">
+  <div class="header-left">
+    {isProjectPage && (
+      <a href="/" class="header-back">
+        <span class="lang-fr">Retour</span>
+        <span class="lang-en">Back</span>
+      </a>
+    )}
+    <a href="mailto:shariyatganse@gmail.com" class="header-email">shariyatganse@gmail.com</a>
+  </div>
+  <div class="header-right">
+    <a href="https://www.linkedin.com/in/shariyat-ganse-327770376" target="_blank" rel="noopener noreferrer" class="header-link">LinkedIn</a>
+    <a href="https://github.com/sha-riyat" target="_blank" rel="noopener noreferrer" class="header-link">GitHub</a>
+    <button id="lang-toggle" class="lang-toggle" aria-label="Toggle language">
+      <span class="lang-fr">EN</span>
+      <span class="lang-en">FR</span>
+    </button>
+  </div>
+</header>
+
+<style>
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-10) var(--spacing-20);
+    font-size: var(--text-caption);
+    letter-spacing: var(--tracking-caption);
+    font-weight: 300;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-20);
+  }
+
+  .header-email {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .header-email:hover {
+    opacity: 0.6;
+  }
+
+  .header-back {
+    position: relative;
+  }
+
+  .header-back::before {
+    content: "←";
+    margin-right: var(--spacing-5);
+  }
+
+  .header-back:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-20);
+  }
+
+  .header-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .lang-toggle {
+    font-size: var(--text-caption);
+    letter-spacing: var(--tracking-caption);
+    font-weight: 300;
+    padding: var(--spacing-5) var(--spacing-10);
+    border: 1px solid var(--color-ink);
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .lang-toggle:hover {
+    background: var(--color-ink);
+    color: var(--color-canvas);
+  }
+</style>
