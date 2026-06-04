@@ -36,12 +36,18 @@ const { id, thumb, title, services } = Astro.props;
 
   .project-card-image {
     margin-bottom: var(--spacing-10);
+    overflow: hidden; /* Important pour contenir le zoom */
   }
 
   .project-card-image :global(img) {
     width: 100%;
     height: auto;
     display: block;
+    transition: transform 0.5s ease; /* Animation fluide */
+  }
+
+  .project-card:hover .project-card-image :global(img) {
+    transform: scale(1.05); /* Zoom de 5% */
   }
 
   .project-card-title {

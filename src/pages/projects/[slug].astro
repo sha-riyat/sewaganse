@@ -20,7 +20,7 @@ const { project } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{project.title.en} — Shariyat Ganse</title>
+    <title>{project.title.en} — Sewa Ganse</title>
     <script is:inline>
       (function () {
         var html = document.documentElement;
@@ -37,10 +37,28 @@ const { project } = Astro.props;
     <main>
       <article class="project-detail">
         <h1 class="project-detail-title">
-          <span class="lang-fr">{project.title.fr}</span>
-          <span class="lang-en">{project.title.en}</span>
+          {project.url ? (
+            <a href={project.url} target="_blank" rel="noopener noreferrer" class="project-link">
+              <span class="lang-fr">{project.title.fr}</span>
+              <span class="lang-en">{project.title.en}</span>
+              <span class="link-arrow">↗</span>
+            </a>
+          ) : (
+            <>
+              <span class="lang-fr">{project.title.fr}</span>
+              <span class="lang-en">{project.title.en}</span>
+            </>
+          )}
         </h1>
         <div class="project-detail-meta">
+          {project.url && (
+            <p class="project-detail-url">
+              <span class="lang-fr">Site web</span>
+              <span class="lang-en">Website</span>
+              <span class="meta-sep">&thinsp;:</span>
+              <a href={project.url} target="_blank" rel="noopener noreferrer">{project.url.replace('https://', '')}</a>
+            </p>
+          )}
           <p class="project-detail-client">
             <span class="lang-fr">Client</span>
             <span class="lang-en">Client</span>
@@ -90,6 +108,36 @@ const { project } = Astro.props;
     letter-spacing: var(--tracking-display);
     font-weight: 300;
     margin-bottom: var(--spacing-20);
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-10);
+    text-decoration: none;
+  }
+
+  .project-link:hover {
+    opacity: 0.7;
+  }
+
+  .link-arrow {
+    font-size: 0.6em;
+    vertical-align: middle;
+    transition: transform 0.3s ease;
+  }
+
+  .project-link:hover .link-arrow {
+    transform: translate(5px, -5px);
+  }
+
+  .project-detail-url a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .project-detail-url a:hover {
+    opacity: 0.6;
   }
 
   .project-detail-meta {
