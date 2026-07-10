@@ -1,7 +1,8 @@
 import bt1 from '../assets/images/bt1.png';
 import bt2 from '../assets/images/bt2.png';
 import agentity from '../assets/images/agentity_new.jpg';
-import seiro from '../assets/images/seiro.jpg';
+import seiro from '../assets/images/seiroagency.jpeg';
+import dekawoleAnyron from '../assets/images/dekawole-anyron.jpg';
 import type { ImageMetadata } from 'astro';
 
 export interface Project {
@@ -32,7 +33,7 @@ export const projects: Project[] = [
     thumb: seiro,
     hero: seiro,
     images: [seiro],
-    url: 'https://seiro-ai-agency.vercel.app/',
+    url: 'https://seiroagency.com/',
   },
   {
     id: 'agentity',
@@ -66,5 +67,22 @@ export const projects: Project[] = [
     thumb: bt1,
     hero: bt1,
     images: [bt1, bt2],
+  },
+  {
+    id: 'dekawole-anyron',
+    title: { fr: 'Dekawole-Anyron', en: 'Dekawole-Anyron' },
+    client: { fr: 'Famille Dekawole-Anyron', en: 'Dekawole-Anyron Family' },
+    services: {
+      fr: 'Développement Web, Blog, Tournoi d\'Awalé',
+      en: 'Web Development, Blog, Awalé Tournament',
+    },
+    description: {
+      fr: 'Site web dédié à la famille Dekawole-Anyron, visant à présenter les activités familiales avec un blog. Actuellement concentré sur un tournoi d\'Awalé.',
+      en: 'Website dedicated to the Dekawole-Anyron family, aiming to present family activities with a blog section. Currently focused on an Awalé tournament.',
+    },
+    thumb: dekawoleAnyron,
+    hero: dekawoleAnyron,
+    images: [dekawoleAnyron],
+    url: 'https://dekawole-anyron.dekawole.workers.dev/',
   },
 ];

@@ -51,6 +51,28 @@
   box-sizing: border-box;
 }
 
+@media (max-width: 1024px) {
+  :root {
+    --section-gap: 60px;
+    --text-body: 1rem;
+    --text-subheading: 1.25rem;
+    --text-heading: 1.5rem;
+    --text-display: clamp(2rem, 4vw, 2.5rem);
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --section-gap: 40px;
+    --spacing-60: 40px;
+    --spacing-80: 50px;
+    --text-caption: 0.875rem;
+    --text-body: 0.9375rem;
+    --text-subheading: 1.125rem;
+    --text-heading: 1.375rem;
+  }
+}
+
 html {
   font-family: var(--font-primary);
   color: var(--color-ink);

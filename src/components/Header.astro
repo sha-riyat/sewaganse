@@ -12,15 +12,68 @@ const isProjectPage = Astro.url.pathname !== '/';
     )}
     <a href="mailto:sewaganse@gmail.com" class="header-email">sewaganse@gmail.com</a>
   </div>
-  <div class="header-right">
-    <a href="https://www.linkedin.com/in/sewaganse/" target="_blank" rel="noopener noreferrer" class="header-link">LinkedIn</a>
-    <a href="https://github.com/sha-riyat" target="_blank" rel="noopener noreferrer" class="header-link">GitHub</a>
-    <button id="lang-toggle" class="lang-toggle" aria-label="Toggle language">
-      <span class="lang-fr">EN</span>
-      <span class="lang-en">FR</span>
-    </button>
+  <div class="header-nav" id="header-nav">
+    <div class="header-right">
+      <a href="https://www.linkedin.com/in/sewaganse/" target="_blank" rel="noopener noreferrer" class="header-link">LinkedIn</a>
+      <a href="https://github.com/sha-riyat" target="_blank" rel="noopener noreferrer" class="header-link">GitHub</a>
+      <button id="lang-toggle" class="lang-toggle" aria-label="Toggle language">
+        <span class="lang-fr">EN</span>
+        <span class="lang-en">FR</span>
+      </button>
+    </div>
   </div>
+  <button id="menu-toggle" class="menu-toggle" aria-label="Menu" aria-expanded="false">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      <line id="menu-icon-line1" x1="3" y1="6" x2="21" y2="6" />
+      <line id="menu-icon-line2" x1="3" y1="12" x2="21" y2="12" />
+      <line id="menu-icon-line3" x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+      <line x1="6" y1="6" x2="18" y2="18" />
+      <line x1="18" y1="6" x2="6" y2="18" />
+    </svg>
+  </button>
+  <div id="menu-overlay" class="menu-overlay"></div>
 </header>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function () {
+    var toggle = document.getElementById('menu-toggle');
+    var nav = document.getElementById('header-nav');
+    var overlay = document.getElementById('menu-overlay');
+    var toggleIcons = toggle && toggle.querySelectorAll('svg');
+
+    if (!toggle || !nav || !toggleIcons) return;
+
+    function openMenu() {
+      nav.classList.add('header-nav--open');
+      overlay.classList.add('menu-overlay--visible');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggleIcons[0].style.display = 'none';
+      toggleIcons[1].style.display = 'block';
+    }
+
+    function closeMenu() {
+      nav.classList.remove('header-nav--open');
+      overlay.classList.remove('menu-overlay--visible');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggleIcons[0].style.display = 'block';
+      toggleIcons[1].style.display = 'none';
+    }
+
+    toggle.addEventListener('click', function () {
+      var isOpen = nav.classList.contains('header-nav--open');
+      if (isOpen) closeMenu();
+      else openMenu();
+    });
+
+    overlay.addEventListener('click', closeMenu);
+
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('.header-link')) closeMenu();
+    });
+  });
+</script>
 
 <style>
   .header {
@@ -31,6 +84,7 @@ const isProjectPage = Astro.url.pathname !== '/';
     font-size: var(--text-caption);
     letter-spacing: var(--tracking-caption);
     font-weight: 300;
+    gap: var(--spacing-10);
   }
 
   .header-left {
@@ -62,6 +116,11 @@ const isProjectPage = Astro.url.pathname !== '/';
     text-underline-offset: 3px;
   }
 
+  .header-nav {
+    display: flex;
+    align-items: center;
+  }
+
   .header-right {
     display: flex;
     align-items: center;
@@ -85,5 +144,89 @@ const isProjectPage = Astro.url.pathname !== '/';
   .lang-toggle:hover {
     background: var(--color-ink);
     color: var(--color-canvas);
+  }
+
+  .menu-toggle {
+    display: none;
+    padding: var(--spacing-5);
+    z-index: 110;
+    line-height: 1;
+  }
+
+  .menu-overlay {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .header {
+      padding: var(--spacing-10) var(--spacing-10);
+    }
+
+    .menu-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 260px;
+      height: 100vh;
+      background: var(--color-canvas);
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 80px var(--spacing-20) var(--spacing-20);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 100;
+      border-left: 1px solid #e0e0e0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .header-nav--open {
+      transform: translateX(0);
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .header-right {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-20);
+      width: 100%;
+    }
+
+    .header-link {
+      font-size: 1.125rem;
+      display: block;
+      width: 100%;
+      padding: var(--spacing-5) 0;
+    }
+
+    .lang-toggle {
+      margin-top: var(--spacing-10);
+      width: 100%;
+      text-align: center;
+    }
+
+    .menu-overlay {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .menu-overlay--visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
   }
 </style>

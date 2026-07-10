@@ -114,6 +114,12 @@ import '../styles/global.css';
     }
   }
 
+  @media (max-width: 767px) {
+    .intro-grid-right {
+      display: none;
+    }
+  }
+
   .intro-title {
     font-size: var(--text-heading);
     line-height: var(--leading-heading);
@@ -148,13 +154,27 @@ import '../styles/global.css';
     margin-bottom: var(--spacing-30);
   }
 
+  @media (max-width: 1024px) {
+    .projects-masonry-column {
+      padding-left: var(--spacing-20);
+    }
+    .projects-masonry {
+      margin-left: calc(-1 * var(--spacing-20));
+    }
+    .projects-masonry-column > * {
+      margin-bottom: var(--spacing-20);
+    }
+  }
+
   @media (max-width: 767px) {
     .projects-masonry {
       flex-direction: column;
+      margin-left: 0;
     }
 
     .projects-masonry-column {
       width: 100%;
+      padding-left: 0;
     }
   }
 </style>

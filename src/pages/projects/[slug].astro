@@ -180,4 +180,10 @@ const { project } = Astro.props;
     display: grid;
     gap: var(--spacing-20);
   }
+
+  @media (max-width: 767px) {
+    .project-detail {
+      padding: var(--spacing-30) var(--spacing-10) var(--spacing-60);
+    }
+  }
 </style>

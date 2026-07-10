@@ -65,4 +65,10 @@ const { id, thumb, title, services } = Astro.props;
     font-weight: 300;
     color: var(--color-muted);
   }
+
+  @media (max-width: 767px) {
+    .project-card-title {
+      font-size: var(--text-subheading);
+    }
+  }
 </style>
