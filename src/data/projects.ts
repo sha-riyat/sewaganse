@@ -1,9 +1,8 @@
-import bt1 from '../assets/images/bt1.png';
-import bt2 from '../assets/images/bt2.png';
-import agentity from '../assets/images/agentity_new.jpg';
-import seiro from '../assets/images/seiroagency.jpeg';
-import dekawoleAnyron from '../assets/images/dekawole-anyron.jpg';
-import type { ImageMetadata } from 'astro';
+const bt1 = '/images/projects/bt1.png';
+const bt2 = '/images/projects/bt2.png';
+const agentity = '/images/projects/agentity_new.jpg';
+const seiro = '/images/projects/seiroagency.png';
+const dekawoleAnyron = '/images/projects/dekawole-anyron.png';
 
 export interface Project {
   id: string;
@@ -11,9 +10,9 @@ export interface Project {
   client: { fr: string; en: string };
   services: { fr: string; en: string };
   description: { fr: string; en: string };
-  thumb: ImageMetadata;
-  hero: ImageMetadata;
-  images: ImageMetadata[];
+  thumb: string;
+  hero: string;
+  images: string[];
   url?: string;
 }
 
