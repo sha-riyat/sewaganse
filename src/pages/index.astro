@@ -1,180 +1,109 @@
 ---
-import Header from '../components/Header.astro';
+import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import Footer from '../components/Footer.astro';
 import { projects } from '../data/projects';
-import '../styles/global.css';
 ---
 
-<!doctype html>
-<html lang="fr" data-lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sewa Ganse &mdash; D&eacute;veloppeur web &amp; mobile</title>
-    <meta name="description" content="Sewa Ganse — Développeur web & mobile, freelance." />
-    <script is:inline>
-      (function () {
-        var html = document.documentElement;
-        var saved = localStorage.getItem('lang');
-        if (saved === 'en' || saved === 'fr') {
-          html.lang = saved;
-          html.dataset.lang = saved;
-        }
-      })();
-    </script>
-  </head>
-  <body>
-    <Header />
-    <main class="home">
-      <section class="intro">
-        <div class="container">
-          <div class="intro-grid">
-            <div class="intro-grid-left">
-              <p class="intro-bio">
-                <span class="lang-fr">Sewa Ganse est un d&eacute;veloppeur web &amp; mobile, concevant des identit&eacute;s num&eacute;riques distinctives et des exp&eacute;riences centr&eacute;es sur l&rsquo;utilisateur.</span>
-                <span class="lang-en">Sewa Ganse is a web &amp; mobile developer, crafting distinctive digital identities and compelling user-centric experiences.</span>
-              </p>
-            </div>
-            <div class="intro-grid-right">
-              <!-- Colonne vide pour l'équilibre visuel -->
-            </div>
-          </div>
-        </div>
-      </section>
+<Base title="Sewa Ganse — Développeur web & mobile">
+  <section class="hero grid">
+    <!-- One line, wall to wall: the name is the facade. -->
+    <h1 class="hero-name">Sewa Ganse</h1>
 
-      <section class="projects">
-        <div class="container">
-          <div class="projects-masonry">
-            <div class="projects-masonry-column">
-              {projects
-                .filter((_, i) => i % 2 === 0)
-                .map((p) => (
-                  <ProjectCard
-                    id={p.id}
-                    thumb={p.thumb}
-                    title={p.title}
-                    services={p.services}
-                  />
-                ))}
-            </div>
-            <div class="projects-masonry-column">
-              {projects
-                .filter((_, i) => i % 2 === 1)
-                .map((p) => (
-                  <ProjectCard
-                    id={p.id}
-                    thumb={p.thumb}
-                    title={p.title}
-                    services={p.services}
-                  />
-                ))}
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-    <Footer />
-    <script src="../scripts/lang.js"></script>
-  </body>
-</html>
+    <p class="hero-bio">
+      <span class="lang-fr">Développeur web &amp; mobile. Je construis des identités numériques nettes et des expériences où l'interface s'efface devant l'usage.</span>
+      <span class="lang-en">Web &amp; mobile developer. I build sharp digital identities and experiences where the interface steps back for the use.</span>
+    </p>
 
-<style is:global>
-  .home {
-    padding: var(--spacing-80) 0;
+    <a href="mailto:sewaganse@gmail.com" class="hero-cta">
+      <span class="lang-fr">Démarrer un projet</span>
+      <span class="lang-en">Start a project</span>
+      <span aria-hidden="true">→</span>
+    </a>
+  </section>
+
+  <section class="work" id="index">
+    <div class="grid work-head">
+      <span class="label">(1.0)
+        <span class="lang-fr">Travaux sélectionnés</span>
+        <span class="lang-en">Selected work</span>
+      </span>
+      <span class="label work-count">{String(projects.length).padStart(2, '0')}</span>
+    </div>
+    <div class="grid stack">
+      {projects.map((p, i) => (
+        <ProjectCard n={i + 1} id={p.id} thumb={p.thumb} title={p.title} services={p.services} />
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    container-type: inline-size;
+    min-height: calc(100svh - 56px);
+    padding-top: clamp(32px, 6vw, 96px);
+    padding-bottom: clamp(32px, 4vw, 56px);
+    align-content: end;
+    row-gap: clamp(24px, 3vw, 48px);
+  }
+  /* Sized so the line meets both margins; 100cqw is the hero's inner width.
+     5.65 is the measured width of "SEWA GANSE" in em at this tracking. */
+  .hero-name {
+    grid-column: 1 / -1;
+    font: 600 calc(100cqw / 5.65)/0.8 var(--font);
+    letter-spacing: -0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    animation: arrive 1.1s var(--ease) both;
+  }
+  @keyframes arrive {
+    from { opacity: 0; filter: blur(14px); transform: translateX(-6vw) scaleX(1.08); }
   }
 
-  .container {
-    max-width: 100%;
-    padding: 0 var(--spacing-20);
+  .hero-bio {
+    grid-column: 1 / span 5;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: clamp(18px, 1.6vw, 24px);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
   }
-
-  .intro-grid {
+  /* One square slab: ink at rest, the signal blue when touched. */
+  .hero-cta {
+    grid-column: 9 / -1;
+    align-self: start;
     display: flex;
-    flex-wrap: wrap;
-    margin: 0 -10px;
+    align-items: center;
+    gap: 16px;
+    height: 72px;
+    padding: 0 24px;
+    background: var(--ink);
+    color: var(--bg);
+    font: 500 clamp(18px, 1.5vw, 22px) var(--font);
+    letter-spacing: -0.01em;
+    transition: background 0.18s, color 0.18s;
   }
+  .hero-cta > :last-child { margin-left: auto; transition: transform 0.3s var(--ease); }
+  .hero-cta:hover { background: var(--signal); color: #fff; }
+  .hero-cta:hover > :last-child { transform: translateX(6px); }
 
-  .intro {
-    margin-bottom: var(--spacing-60);
+  .work { padding-bottom: clamp(80px, 12vw, 200px); border-top: 1px solid var(--line); }
+  .work-head { padding-top: 16px; padding-bottom: clamp(40px, 6vw, 96px); }
+  .work-head .label { grid-column: 1 / span 6; }
+  .work-head .work-count { grid-column: 7 / -1; text-align: right; }
+
+  /* Two strict columns: left slabs start on the left margin, right slabs end
+     on the right margin; the step between them is vertical only. */
+  .stack { row-gap: clamp(64px, 10vw, 160px); }
+  .stack > :global(:nth-child(odd)) { grid-column: 1 / span 7; }
+  .stack > :global(:nth-child(even)) { grid-column: 8 / span 5; margin-top: clamp(120px, 18vw, 320px); }
+
+  @media (max-width: 720px) {
+    .hero { min-height: 72svh; }
   }
-
-  .intro-grid-left,
-  .intro-grid-right {
-    position: relative;
-    width: 100%;
-    padding: 0 10px;
-  }
-
-  @media (min-width: 768px) {
-    .intro-grid-left,
-    .intro-grid-right {
-      flex: 0 0 50%;
-      max-width: 50%;
-    }
-  }
-
-  @media (max-width: 767px) {
-    .intro-grid-right {
-      display: none;
-    }
-  }
-
-  .intro-title {
-    font-size: var(--text-heading);
-    line-height: var(--leading-heading);
-    letter-spacing: var(--tracking-heading);
-    font-weight: 300;
-    margin-bottom: 0;
-  }
-
-  .intro-name {
-    font-weight: 400;
-  }
-
-  .intro-bio {
-    font-size: var(--text-subheading);
-    line-height: var(--leading-subheading);
-    letter-spacing: var(--tracking-subheading);
-    font-weight: 300;
-  }
-
-  .projects-masonry {
-    display: flex;
-    margin-left: -1.25rem;
-    width: auto;
-  }
-
-  .projects-masonry-column {
-    padding-left: 1.25rem;
-    width: 50%;
-  }
-
-  .projects-masonry-column > * {
-    margin-bottom: var(--spacing-30);
-  }
-
-  @media (max-width: 1024px) {
-    .projects-masonry-column {
-      padding-left: var(--spacing-20);
-    }
-    .projects-masonry {
-      margin-left: calc(-1 * var(--spacing-20));
-    }
-    .projects-masonry-column > * {
-      margin-bottom: var(--spacing-20);
-    }
-  }
-
-  @media (max-width: 767px) {
-    .projects-masonry {
-      flex-direction: column;
-      margin-left: 0;
-    }
-
-    .projects-masonry-column {
-      width: 100%;
-      padding-left: 0;
-    }
+  @media (max-width: 960px) {
+    .hero-bio { grid-column: 1 / -1; }
+    .hero-cta { grid-column: 1 / -1; }
+    .stack > :global(*) { grid-column: 1 / -1 !important; margin-top: 0 !important; }
   }
 </style>

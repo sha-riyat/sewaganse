@@ -1,189 +1,138 @@
 ---
-import { Image } from 'astro:assets';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
+import Base from '../../layouts/Base.astro';
 import { projects } from '../../data/projects';
-import '../../styles/global.css';
 
 export async function getStaticPaths() {
-  return projects.map((project) => ({
+  return projects.map((project, i) => ({
     params: { slug: project.id },
-    props: { project },
+    props: { project, i, next: projects[(i + 1) % projects.length] },
   }));
 }
 
-const { project } = Astro.props;
+const { project, i, next } = Astro.props;
+const n = i + 1;
+const pad = (x: number) => String(x).padStart(2, '0');
 ---
 
-<!doctype html>
-<html lang="fr" data-lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{project.title.en} — Sewa Ganse</title>
-    <script is:inline>
-      (function () {
-        var html = document.documentElement;
-        var saved = localStorage.getItem('lang');
-        if (saved === 'en' || saved === 'fr') {
-          html.lang = saved;
-          html.dataset.lang = saved;
-        }
-      })();
-    </script>
-  </head>
-  <body>
-    <Header />
-    <main>
-      <article class="project-detail">
-        <h1 class="project-detail-title">
-          {project.url ? (
-            <a href={project.url} target="_blank" rel="noopener noreferrer" class="project-link">
-              <span class="lang-fr">{project.title.fr}</span>
-              <span class="lang-en">{project.title.en}</span>
-              <span class="link-arrow">↗</span>
-            </a>
-          ) : (
-            <>
-              <span class="lang-fr">{project.title.fr}</span>
-              <span class="lang-en">{project.title.en}</span>
-            </>
-          )}
-        </h1>
-        <div class="project-detail-meta">
-          {project.url && (
-            <p class="project-detail-url">
-              <span class="lang-fr">Site web</span>
-              <span class="lang-en">Website</span>
-              <span class="meta-sep">&thinsp;:</span>
-              <a href={project.url} target="_blank" rel="noopener noreferrer">{project.url.replace('https://', '')}</a>
-            </p>
-          )}
-          <p class="project-detail-client">
-            <span class="lang-fr">Client</span>
-            <span class="lang-en">Client</span>
-            <span class="meta-sep">&thinsp;:</span>
+<Base title={`${project.title.en} — Sewa Ganse`} description={project.description.en}>
+  <article>
+    <header class="head grid">
+      <span class="label head-index">(2.{n}) — {pad(n)} / {pad(projects.length)}</span>
+      <h1 class="head-title">
+        <span class="lang-fr">{project.title.fr}</span>
+        <span class="lang-en">{project.title.en}</span>
+      </h1>
+    </header>
+
+    <!-- Spec sheet: what it is, for whom, where it lives. -->
+    <section class="spec grid">
+      <dl class="spec-list">
+        <div>
+          <dt class="label">Client</dt>
+          <dd>
             <span class="lang-fr">{project.client.fr}</span>
             <span class="lang-en">{project.client.en}</span>
-          </p>
-          <p class="project-detail-services">
-            <span class="lang-fr">Services</span>
-            <span class="lang-en">Services</span>
-            <span class="meta-sep">&thinsp;:</span>
+          </dd>
+        </div>
+        <div>
+          <dt class="label">Services</dt>
+          <dd>
             <span class="lang-fr">{project.services.fr}</span>
             <span class="lang-en">{project.services.en}</span>
-          </p>
-          <p class="project-detail-description">
-            <span class="lang-fr">{project.description.fr}</span>
-            <span class="lang-en">{project.description.en}</span>
-          </p>
+          </dd>
         </div>
-        <div class="project-detail-hero">
-          <Image src={project.hero} alt="" />
-        </div>
-        {project.images.length > 1 && (
-          <div class="project-detail-gallery">
-            {project.images.slice(1).map((img) => (
-              <div class="project-detail-gallery-image">
-                <Image src={img} alt="" />
-              </div>
-            ))}
+        {project.url && (
+          <div>
+            <dt class="label">
+              <span class="lang-fr">Site web</span>
+              <span class="lang-en">Website</span>
+            </dt>
+            <dd>
+              <a href={project.url} target="_blank" rel="noopener noreferrer" class="spec-link">
+                {project.url.replace(/^https?:\/\//, '').replace(/\/$/, '')} ↗
+              </a>
+            </dd>
           </div>
         )}
-      </article>
-    </main>
-    <Footer />
-    <script src="../../scripts/lang.js"></script>
-  </body>
-</html>
+      </dl>
+      <p class="spec-desc">
+        <span class="lang-fr">{project.description.fr}</span>
+        <span class="lang-en">{project.description.en}</span>
+      </p>
+    </section>
 
-<style is:global>
-  .project-detail {
-    padding: var(--spacing-60) var(--spacing-20) var(--spacing-80);
+    <section class="plates grid">
+      {project.images.map((img, k) => (
+        <figure class="plate">
+          <img src={img} alt="" loading={k === 0 ? 'eager' : 'lazy'} />
+          <figcaption class="label">(2.{n}.{k + 1})</figcaption>
+        </figure>
+      ))}
+    </section>
+
+    <a href={`/projects/${next.id}`} class="next grid">
+      <span class="label next-label">
+        <span class="lang-fr">Projet suivant</span>
+        <span class="lang-en">Next project</span>
+      </span>
+      <span class="next-title">
+        <span class="lang-fr">{next.title.fr}</span>
+        <span class="lang-en">{next.title.en}</span>
+        →
+      </span>
+    </a>
+  </article>
+</Base>
+
+<style>
+  .head { padding-top: 16px; padding-bottom: clamp(32px, 5vw, 72px); row-gap: clamp(40px, 8vw, 120px); }
+  .head-index { grid-column: 1 / -1; }
+  .head-title {
+    grid-column: 1 / -1;
+    font: 600 clamp(48px, 10vw, 180px)/0.86 var(--font);
+    letter-spacing: -0.055em;
+    margin-left: -0.04em;
+    animation: arrive 1s var(--ease) both;
+  }
+  @keyframes arrive {
+    from { opacity: 0; filter: blur(12px); transform: translateX(-4vw); }
   }
 
-  .project-detail-title {
-    font-size: var(--text-display);
-    line-height: var(--leading-display);
-    letter-spacing: var(--tracking-display);
-    font-weight: 300;
-    margin-bottom: var(--spacing-20);
+  .spec { padding-top: 16px; padding-bottom: clamp(48px, 7vw, 112px); border-top: 1px solid var(--line); }
+  .spec-list { grid-column: 1 / span 5; display: grid; gap: 20px; }
+  .spec-list dd { margin-top: 4px; font-size: 17px; }
+  .spec-link { border-bottom: 1px solid var(--muted); transition: border-color 0.18s; }
+  .spec-link:hover { border-color: var(--signal); }
+  .spec-desc {
+    grid-column: 7 / -1;
+    font-size: clamp(20px, 1.9vw, 30px);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    max-width: 34ch;
   }
 
-  .project-link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-10);
-    text-decoration: none;
-  }
+  .plates { row-gap: var(--gap); padding-bottom: clamp(64px, 10vw, 160px); }
+  .plate { grid-column: 1 / -1; display: grid; gap: 8px; }
+  .plate img { width: 100%; background: var(--bg-2); }
 
-  .project-link:hover {
-    opacity: 0.7;
+  .next {
+    align-items: end;
+    padding-top: 16px;
+    padding-bottom: clamp(48px, 8vw, 120px);
+    border-top: 1px solid var(--line);
+    row-gap: 24px;
   }
-
-  .link-arrow {
-    font-size: 0.6em;
-    vertical-align: middle;
-    transition: transform 0.3s ease;
+  .next-label { grid-column: 1 / -1; }
+  .next-title {
+    grid-column: 1 / -1;
+    font: 500 clamp(36px, 6vw, 96px)/0.9 var(--font);
+    letter-spacing: -0.05em;
+    transition: color 0.2s, transform 0.4s var(--ease);
   }
+  .next:hover .next-title { color: var(--muted); transform: translateX(12px); }
 
-  .project-link:hover .link-arrow {
-    transform: translate(5px, -5px);
-  }
-
-  .project-detail-url a {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  .project-detail-url a:hover {
-    opacity: 0.6;
-  }
-
-  .project-detail-meta {
-    margin-bottom: var(--spacing-30);
-    font-size: var(--text-body);
-    line-height: var(--leading-body);
-    letter-spacing: var(--tracking-body);
-  }
-
-  .project-detail-meta p {
-    margin-bottom: var(--spacing-5);
-  }
-
-  .meta-sep {
-    margin-right: var(--spacing-5);
-  }
-
-  .project-detail-client span:last-child,
-  .project-detail-services span:last-child {
-    font-weight: 400;
-  }
-
-  .project-detail-description {
-    margin-top: var(--spacing-20);
-    max-width: 640px;
-  }
-
-  .project-detail-hero {
-    margin-bottom: var(--spacing-20);
-  }
-
-  .project-detail-hero :global(img),
-  .project-detail-gallery-image :global(img) {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  .project-detail-gallery {
-    display: grid;
-    gap: var(--spacing-20);
-  }
-
-  @media (max-width: 767px) {
-    .project-detail {
-      padding: var(--spacing-30) var(--spacing-10) var(--spacing-60);
-    }
+  @media (max-width: 960px) {
+    .spec-list, .spec-desc { grid-column: 1 / -1; }
+    .spec-desc { margin-top: 32px; }
   }
 </style>

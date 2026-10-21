@@ -2,6 +2,9 @@
   "name": "sewa-ganse-dev",
   "type": "module",
   "version": "2.0.0",
+  "engines": {
+    "node": ">=24.22.1"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
